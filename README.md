@@ -465,3 +465,265 @@ SET OPERATORS
    into a single result set. This script demonstrates the rules and usage of
    set operations, including UNION, UNION ALL, EXCEPT, and INTERSECT.
 ![image](https://github.com/user-attachments/assets/2567e8bf-6906-4f73-8535-6739768aa77e)
+
+ UNION 
+
+SELECT
+    FirstName,
+    LastName
+FROM Sales.Customers
+UNION
+SELECT
+    LastName,
+    FirstName
+FROM Sales.Employees;
+
+
+
+UNION ALL
+
+
+
+SELECT
+    FirstName,
+    LastName
+FROM Sales.Customers
+UNION ALL
+SELECT
+    FirstName,
+    LastName
+FROM Sales.Employees;
+
+ 
+EXCEPT 
+
+SELECT
+    FirstName,
+    LastName
+FROM Sales.Employees
+EXCEPT
+SELECT
+    FirstName,
+    LastName
+FROM Sales.Customers;
+
+
+INTERSECT
+
+    FirstName,
+    LastName
+FROM Sales.Employees
+INTERSECT
+SELECT
+    FirstName,
+    LastName
+FROM Sales.Customers;
+
+
+
+
+
+
+
+
+
+
+SQL FUNCTIONS
+
+STRING FUNCTIONS
+
+ CONCAT 
+SELECT 
+    CONCAT(first_name, '-', country) AS full_info
+FROM customers
+
+
+UPPER & LOWER
+SELECT 
+    LOWER(first_name) AS lower_case_name
+FROM customers
+
+-- Convert the first name to uppercase
+SELECT 
+    UPPER(first_name) AS upper_case_name
+FROM customers
+
+
+TRIM
+SELECT 
+    first_name,
+	LEN(first_name) len_name,
+	LEN(TRIM(first_name)) len_trim_name,
+	LEN(first_name) - LEN(TRIM(first_name)) flag
+FROM customers
+WHERE LEN(first_name)  != LEN(TRIM(first_name))
+
+
+REPLACE
+
+SELECT
+'123-456-7890' AS phone,
+REPLACE('123-456-7890', '-', '/') AS clean_phone
+
+-- Replace File Extence from txt to csv
+SELECT
+'report.txt' AS old_filename,
+REPLACE('report.txt', '.txt', '.csv') AS new_filename
+	
+
+
+LEN
+SELECT 
+    first_name, 
+    LEN(first_name) AS name_length
+FROM customers
+
+
+LEFT AND RIGHT
+SELECT 
+    first_name,
+    LEFT(TRIM(first_name), 2) AS first_2_chars
+FROM customers
+
+-- Retrieve the last two characters of each first name
+SELECT 
+    first_name,
+    RIGHT(first_name, 2) AS last_2_chars
+FROM customers
+
+
+SUBSTRING
+SELECT 
+    first_name,
+    SUBSTRING(TRIM(first_name), 2, LEN(first_name)) AS trimmed_name
+FROM customers	
+
+
+ROUND FUNCTION
+
+
+
+SELECT 
+    3.516 AS original_number,
+    ROUND(3.516, 2) AS round_2,
+    ROUND(3.516, 1) AS round_1,
+    ROUND(3.516, 0) AS round_0
+
+
+NUMBER FUNCTION (ABS)
+
+  Returns the absolute (positive) value of a number removing any negative sign
+SELECT 
+    -10 AS original_number,
+    ABS(-10) AS absolute_value_negative,
+    ABS(10) AS absolute_value_positive
+
+
+DATE & TIME FUNCTIONS
+
+GETDATE() - RETURNS THE CURRENT DATE AND TIME AT THE MOMENT WHEN THE QURY IS EXECUTED.
+Ex-
+SELECT
+    OrderID,
+    CreationTime,
+    '2025-08-20' AS HardCoded,
+    GETDATE() AS Today
+FROM Sales.Orders;
+
+
+
+
+PART EXTRATION
+ DAY() - Returns the day from a date
+MONTH() - Returns the month from the date
+YEAR()- Returns the year from a date
+
+EX- 
+SELECT
+OrderID,
+CreationTime,
+YEAR(CreationTime) YEAR,
+MONTH(CreationTime) MONTH,
+DAY(CreationTime) DAY
+FROM Sales.Orders
+
+
+DATEPART() - Returns a specific part of a date as a number
+SYNTAX- DATEPART(PART, DATE)
+
+EX-
+SELECT
+OrderID,
+CreationTime,
+DATEPART(year, CreationTime) AS Year_dp,
+    DATEPART(month, CreationTime) AS Month_dp,
+    DATEPART(day, CreationTime) AS Day_dp,
+    DATEPART(hour, CreationTime) AS Hour_dp,
+    DATEPART(quarter, CreationTime) AS Quarter_dp,
+    DATEPART(week, CreationTime) AS Week_dp
+FROM Sales.Orders
+
+
+DATENAME()-
+SYNTAX- DATENAME(PART,DATE)
+
+EX-
+OrderID,
+CreationTime,
+  DATENAME(month, CreationTime) AS Month_dn,
+    DATENAME(weekday, CreationTime) AS Weekday_dn,
+    DATENAME(day, CreationTime) AS Day_dn,
+    DATENAME(year, CreationTime) AS Year_dn
+FROM Sales.Orders
+
+
+DATETRUNC() - TRUNCATES THE DATE TO SPECIFIC PART
+SYNTAX - DATETRUNC(PART, DATE)
+EX-
+SELECT
+OrderID,
+CreationTime,
+   DATETRUNC(year, CreationTime) AS Year_dt,
+    DATETRUNC(day, CreationTime) AS Day_dt,
+    DATETRUNC(minute, CreationTime) AS Minute_dt
+FROM Sales.Orders
+
+
+EOMONTH()- RETURNS THE LAST DAY OF A MONTH
+SYNATX-EOMONTH(DATE)
+EX-
+SELECT
+    OrderID,
+    CreationTime,
+    EOMONTH(CreationTime) AS EndOfMonth
+FROM Sales.Orders;
+
+
+
+
+DATE FORMATS
+
+
+
+FORMATING
+CHANGING THE FORMAT OF A VALUE FROM ONE TO ANOTHER . CHANGING HOW THE DATA LOOKS
+
+
+
+FORMAT - SYNTAX - FORMAT(VALUE, FORMAT [,CULTURE]) OPTIONAL
+EX- 
+SELECT
+    OrderID,
+    CreationTime,
+    FORMAT(CreationTime, 'MM-dd-yyyy') AS USA_Format,
+    FORMAT(CreationTime, 'dd-MM-yyyy') AS EURO_Format,
+    FORMAT(CreationTime, 'dd') AS dd,
+    FORMAT(CreationTime, 'ddd') AS ddd,
+    FORMAT(CreationTime, 'dddd') AS dddd,
+    FORMAT(CreationTime, 'MM') AS MM,
+    FORMAT(CreationTime, 'MMM') AS MMM,
+    FORMAT(CreationTime, 'MMMM') AS MMMM
+FROM Sales.Orders;
+
+![image](https://github.com/user-attachments/assets/6df0bb08-7a36-4b9f-95e4-c104a8cf4b16)
+
